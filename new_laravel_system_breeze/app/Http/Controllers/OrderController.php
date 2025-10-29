@@ -16,20 +16,20 @@ class OrderController extends Controller
         // 'coor_id',
     public function history(){
         $user = Auth::user();
-        // dd($user->coor_id);
         $orders = Order::where('hotel_id', $user->hotel_id)->
         where('dep_id', $user->dep_id)->
-        where('coor_id', $user->coor_id)->latest()->paginate(14);
+        where('user_id', $user->id)->latest()->paginate(14);
         return view('orders.history', compact('orders'));
     }
 
     public function store(Request $request){
         $data = $request->all(); 
         $user = Auth::user();
+        // dd($data);
         $validated = $request ->validate([
             'orders.*.hotel_id'         => 'required|integer',
             'orders.*.dep_id'           => 'required|integer',
-            'orders.*.coor_id'          => 'required|integer',
+            'orders.*.user_id'          => 'required|integer', //changed from coor_id to user_id
             'orders.*.event_date'       => 'required|date',
             'orders.*.work_start_time'  => 'required|date_format:H:i',
             'orders.*.work_end_time'    => 'required|date_format:H:i',
@@ -54,10 +54,11 @@ class OrderController extends Controller
     public function update($id){
         
         $data = request()->all()["orders"]["0"];
+        // dd($data);
         $validated = request()->validate([
             'orders.*.hotel_id'         => 'required|integer',
             'orders.*.dep_id'           => 'required|integer',
-            'orders.*.coor_id'          => 'required|integer',
+            'orders.*.user_id'          => 'required|integer',
             'orders.*.event_date'       => 'required|date',
             'orders.*.work_start_time'  => 'required|date_format:H:i',
             'orders.*.work_end_time'    => 'required|date_format:H:i',
@@ -72,11 +73,12 @@ class OrderController extends Controller
             'orders.*.event_style'      => 'nullable|string'
         ]);
         
-        $order = Order::findOrFail($id);
+        $order = Order::find($id);
+        // dd($order);
         $order->update([
             'hotel_id'=> $data["hotel_id"],
-            'dep_id'=> $data["dep_id"],
-            'coor_id'=> $data["coor_id"],
+            'dep_id'=> $data["dep_id"], 
+            'user_id'=> $data["user_id"],
             'event_date'=> $data["event_date"],
             'work_start_time'=> $data["work_start_time"],
             'work_end_time'=> $data["work_end_time"],

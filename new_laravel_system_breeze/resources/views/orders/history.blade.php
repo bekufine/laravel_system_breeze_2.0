@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('History') }}
+            {{ __('履歴') }}
         </h2>
     </x-slot>
     <div class="py-12" >
@@ -16,37 +16,37 @@
                             <label>Event date</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Work start time</label>
+                            <label class="block text-base/7 font-semibold text-white">作業開始時刻</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Work end time</label>
+                            <label class="block text-base/7 font-semibold text-white">作業終了時刻</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Workers number</label>
+                            <label class="block text-base/7 font-semibold text-white">労働者数</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Event start time</label>
+                            <label class="block text-base/7 font-semibold text-white">イベント開始時刻</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Event end time</label>
+                            <label class="block text-base/7 font-semibold text-white">イベント終了時刻</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Guests number</label>
+                            <label class="block text-base/7 font-semibold text-white">ゲスト数</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Duty content</label>
+                            <label class="block text-base/7 font-semibold text-white">義務内容</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Venue name</label>
+                            <label class="block text-base/7 font-semibold text-white">会場名</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Position</label>
+                            <label class="block text-base/7 font-semibold text-white">役職</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Comments</label>
+                            <label class="block text-base/7 font-semibold text-white">コメント</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                                <label class="block text-base/7 font-semibold text-white">Event style</label>
+                                <label class="block text-base/7 font-semibold text-white">イベントスタイル</label>
                             </th>
                             <th class="border border-gray-700 w-15 p-2"></th>
                         </tr>

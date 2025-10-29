@@ -15,10 +15,13 @@
         </div>
     @endif
     @if($errors->any())
-        <div class="absolute top-[6%] left-[45%] p-4 bg-[#F0EDED] rounded-lg ">
+        @foreach($errors->all() as $error)
+            <p>{{$error}}</p>
+        @endforeach
+        {{-- <div class="absolute top-[6%] left-[45%] p-4 bg-[#F0EDED] rounded-lg ">
 
             <p> Order is not updated<br>Please try again ❌</p>
-        </div>
+        </div> --}}
     @endif
     {{-- <div class="absolute top-[6%] left-[45%] p-4 bg-[#F0EDED] rounded-lg " >
         <p>Order is updated! ✅ </p>
@@ -64,6 +67,9 @@
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
                             <label class="block text-base/7 font-semibold text-white">Comments</label>
+                            </th>
+                            <th class="border border-gray-700 w-1/10 p-2">
+                                <label class="block text-base/7 font-semibold text-white">Event style</label>
                             </th>
                             
                         </tr>
