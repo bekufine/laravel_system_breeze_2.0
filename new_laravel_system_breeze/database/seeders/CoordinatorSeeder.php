@@ -15,10 +15,11 @@ class CoordinatorSeeder extends Seeder
     public function run(): void
     {
         User::factory()->create([
-            'name' => 'Noyori',
-            'email' => 'noyori@gmail.com',
-            'user_logid'=>"noyoriKyoto",
+            'name' => 'Chin',
+            'email' => 'chin@gmail.com',
+            'user_logid'=>"ChinOsaka",
             'password'=>'test123',
+            "city"=>"大阪",
             'role'=>UserRole::Coordinator
         ]);
     }

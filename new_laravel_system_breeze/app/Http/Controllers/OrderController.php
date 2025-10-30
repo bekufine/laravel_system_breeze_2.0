@@ -47,7 +47,7 @@ class OrderController extends Controller
         foreach($validated["orders"] as $orderRow){
             Order::create($orderRow); 
         }
-        return redirect()->back()->with("success", 'Order is completed!!');
+        return redirect()->back()->with("success",  'Order is updated ✅!');
         
     }
     //update record

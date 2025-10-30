@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
+
 class RoleMiddleware
 {
     /**
@@ -17,12 +18,26 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, string $role)
     {
-        $user = Auth::user();
+        // $user = Auth::user();
 
-        if (!$user || $user->role !== $role) {
+        // if ($user && $user->role === "coordinator") {
+        //     return redirect()->route("coordinator.dashboard");
+            
+        // }
+        // return $next($request);
+        // // abort(403, "Unauthorized access");
+
+        $user = $request->user();
+
+        if (!$user) {
+            return redirect()->route('login'); // для API можно вернуть 401
+        }
+
+        if ($user->role->value !== $role) {
             abort(403);
         }
 
         return $next($request);
+       
     }
 }

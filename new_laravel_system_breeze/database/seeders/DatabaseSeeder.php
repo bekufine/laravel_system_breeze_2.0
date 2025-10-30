@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Hotel;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,12 +19,11 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Henry',
-            'email' => 'henry@gmail.com',
-            'user_logid'=>"henryKyoto",
-            'password'=>'test123',
-            'role'=>"coordinator"
+        Order::class()->create([
+            'hotel_id' => 5,
+            "coor_id"=>9,
+            "dep_id"=>4,
+            "city"=>"大阪"
         ]);
     }
 }
