@@ -1,4 +1,4 @@
-@props(['id' => null,'historyPage'=>false, 'changepage'=>false ,'order' => null ])
+@props(['id' => null,'historyPage'=>false, 'changepage'=>false ,'order' => null, "coordinatorOrders" =>null])
 
 @if($historyPage) 
     @php
@@ -66,6 +66,74 @@
     </td>
 
 </tr>
+@elseif($coordinatorOrders)
+<tr id="{{$order->id}}">
+    
+    <input type="hidden" name="orders[0][hotel_id]" value="{{ auth()->user()->hotel_id }}">
+
+    <input type="hidden" name="orders[0][dep_id]" value="{{ auth()->user()->dep_id }}">
+
+    <input type="hidden" name="orders[0][user_id]" value="{{ auth()->user()->id }}">
+
+    <td class="border border-gray-700 p-2">
+        <input name="orders[0][event_date]" type="text" id="input0" class="w-full border-0 " value="{{$order->event_date}}" readonly/>
+    </td>
+
+    <td class="border border-gray-700 p-2">
+        <input name="orders[0][event_style]"  id="input11" type="text" class="w-full border-0"  value="{{$order->hotel_name}}" readonly/>
+    </td>
+    <td class="border border-gray-700 p-2">
+        <input name="orders[0][event_style]"  id="input11" type="text" class="w-full border-0"  value="{{$order->name}}" readonly/>
+    </td>
+
+    <td class="border border-gray-700 p-2">
+        <input name="orders[0][venue_name]"  id="input8" type="text" class="w-full border-0" value="{{$order->venue_name}}"  readonly/>
+    </td>
+
+    <td class="border border-gray-700 p-2">
+        <input name="orders[0][event_style]"  id="input11" type="text" class="w-full border-0"  value="{{$order->event_style}}" readonly/>
+    </td>
+
+    <td class="border border-gray-700 p-2">
+        <input name="orders[0][event_start_time]" id="input4" type="time"  class="w-auto border-0" value="{{$order->event_start_time}}"  readonly />
+    </td>
+
+    <td class="border border-gray-700 p-2">
+        <input name="orders[0][event_end_time]"   id="input5" type="time"  class="w-auto border-0" value="{{$order->event_end_time}}"  readonly/>
+    </td>
+
+    <td class="border border-gray-700 p-2">
+        <input name="orders[0][position]"   id="input9" type="text" class="w-full border-0" value="{{$order->position}}"  readonly/>
+    </td>
+
+    <td class="border border-gray-700 p-2">
+        <input  name="orders[0][work_start_time]"  id="input1" type="time"  class="w-auto border-0" value="{{$order->work_start_time}}"  readonly />
+    </td>
+    <td class="border border-gray-700 p-2">
+        <input name="orders[0][work_end_time]"  id="input2" type="time" class="w-auto border-0" value="{{$order->work_end_time}}"   readonly/>
+    </td>
+    <td class="border border-gray-700 p-2">
+        <input  name="orders[0][workers_number]" id="input3" type="number" class="w-full border-0" value="{{$order->workers_number}}" readonly />
+    </td>
+   
+    <td class="border border-gray-700 p-2">
+        <input  name="orders[0][guests_number]" id="input6" type="number" class="w-full border-0" value="{{$order->guests_number}}" readonly/>
+    </td>
+    <td class="border border-gray-700 p-2">
+        <input  name="orders[0][duty_content]" id="input7" type="text" class="w-full border-0" value="{{$order->duty_content}}"  readonly/>
+    </td>
+   
+    <td class="border border-gray-700 p-2">
+        <input name="orders[0][comments]"  id="input10" type="text" class="w-full border-0"  value="{{$order->comments}}"  readonly/>
+    </td>
+
+    <td class="border border-gray-700 p-2">
+        <input class="p-2.5" id="{{"input" . $order->id}}" type="checkbox">
+    </td>
+    
+</tr>
+
+
 @elseif($changepage)
 <tr id="{{$id}}">
     
@@ -152,7 +220,13 @@
             <input name="orders[0][event_start_time]" id="input4" type="time"  class="w-auto border-0" required/>
         </td>
         <td class="border border-gray-700 p-2">
-            <input name="orders[0][event_end_time]"   id="input5" type="time"  class="w-auto border-0" required/>
+            <input class="w-full border-0" id="input5" list="swt" name="orders[0][event_end_time]" required placeholder="XX:XX"/>
+            <datalist id="swt">
+                <option value="S">
+                <option value="W">
+                <option value="T">
+            </datalist>
+            {{-- <input name="orders[0][event_end_time]"   id="input5" type="time"  class="w-auto border-0" required/> --}}
         </td>
         <td class="border border-gray-700 p-2">
             <input  name="orders[0][guests_number]" id="input6" type="number" class="w-full border-0" required/>

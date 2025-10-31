@@ -29,7 +29,7 @@
     <div class="py-12" >
         <div class="max-w-full mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <form  class="border-b border-white/10 pb-12" action="{{ route('order.update' , ['id' => $order->id]) }}" method="POST">
+                <form  class="border-b border-white/10 p-7" action="{{ route('order.update' , ['id' => $order->id]) }}" method="POST">
                     @csrf
                     @method('PATCH')
                     <table class="table-fixed w-full border border-gray-700 text-center">

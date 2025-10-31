@@ -30,7 +30,7 @@ class RoleMiddleware
         $user = $request->user();
 
         if (!$user) {
-            return redirect()->route('login'); // для API можно вернуть 401
+            return redirect()->route('login'); 
         }
 
         if ($user->role->value !== $role) {

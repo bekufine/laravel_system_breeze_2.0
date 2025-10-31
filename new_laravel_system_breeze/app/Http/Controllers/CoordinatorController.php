@@ -16,12 +16,22 @@ class CoordinatorController extends Controller
 
     public function orders(){
         $user = Auth::user();
+        // $hotel = DB::table("orders")
+        //     ->join("hotels", "orders.hotel_id", "=", "hotels.id")
+        //     ->join("departments", "orders.dep_id", "=", "departments.id")
+        //     ->select('hotels.hotel_name', 'departments.name')
+        //     ->get();
+            
         $orders = DB::table('orders')
             ->join('hotels', 'orders.hotel_id', '=', 'hotels.id')
+            ->join("departments", "orders.dep_id", "=", "departments.id")
             ->where('hotels.city', $user->city)
-            ->select('orders.*')
-            ->get();
-        return view('coordinator.orders', ["orders" =>$orders]);
+            ->where("orders.is_done", false )
+            ->select('orders.*','hotels.hotel_name', 'departments.name')
+            ->orderByDesc('orders.created_at')
+            ->paginate(14);
+            
+        return view('coordinator.orders', ["CoordinatorsOrders" =>$orders]);
     }
 
     public function history(){

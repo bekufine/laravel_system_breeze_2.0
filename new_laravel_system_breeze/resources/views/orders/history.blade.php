@@ -6,10 +6,10 @@
     </x-slot>
     <div class="py-12" >
         <div class="max-w-full mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white overflow-hidden p-7 shadow-sm sm:rounded-lg">
                 {{-- <form  class="border-b border-white/10 pb-12" action="{{ route('order.store') }}" method="POST"> --}}
                     {{-- @csrf --}}
-                    <table class="table-fixed w-full border border-gray-700 text-center">
+                    <table class="table-fixed w-full border p-7 border-gray-700 text-center">
                         <thead> 
                         <tr class="bg-gray-800 text-white">
                             <th class="border border-gray-700 w-1/10 p-2">

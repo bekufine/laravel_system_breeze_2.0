@@ -13,7 +13,7 @@
     <div class="py-12" >
         <div class="max-w-full mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <form  id = "orderForm" class="border-b border rounded-lg  border-white/10 pb-12" action="{{ route('order.store') }}" method="POST">    
+                <form  id = "orderForm" class="border-b border rounded-lg  border-white/10 p-7" action="{{ route('order.store') }}" method="POST">    
                     @csrf
                     <table class="border rounded-lg table-fixed w-full border-gray-700 text-center">
                         <thead >
@@ -84,7 +84,7 @@
     </div>
     <dialog id="previewModal"
         class="rounded-lg p-6 bg-gray-900 text-white w-[98%] sm:w-[90%]">
-        <h3 class="text-xl font-semibold mb-6 text-center">Проверьте введённые данные</h3>
+        <h3 class="text-xl font-semibold mb-6 text-center">再確認お願いいたします</h3>
 
         <div id="previewContent" class="overflow-x-auto">
             <!-- JS вставит сюда таблицу -->
@@ -93,11 +93,11 @@
         <div class="mt-6 flex justify-end gap-4">
             <button id="cancelPreview"
                     class="px-4 py-2 bg-gray-600 hover:bg-gray-500 rounded-md">
-            Исправить
+            修正
             </button>
             <button id="confirmSubmit"
                     class="px-4 py-2 bg-green-600 hover:bg-green-500 rounded-md">
-            Подтвердить и отправить
+            確認
     </button>
   </div>
 </dialog>
@@ -116,41 +116,38 @@
   let html = `<table class="border rounded-lg table-fixed w-full border-gray-700 text-center"> <thead>
                         <tr class="bg-gray-800 text-white">
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label>Event date</label>
+                            <label>日付</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Work start time</label>
+                            <label class="block text-base/7 font-semibold text-white">会場名</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Work end time</label>
+                                <label class="block text-base/7 font-semibold text-white">Event style</label>
+                            </th>  
+                            <th class="border border-gray-700 w-1/10 p-2">
+                            <label class="block text-base/7 font-semibold text-white">始業時間</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Workers number</label>
+                            <label class="block text-base/7 font-semibold text-white">終業予定</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Event start time</label>
+                            <label class="block text-base/7 font-semibold text-white">発注人数</label>
                             </th>
-                            <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Event end time</label>
-                            </th>
+                            
                             <th class="border border-gray-700 w-1/10 p-2">
                             <label class="block text-base/7 font-semibold text-white">Guests number</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
                             <label class="block text-base/7 font-semibold text-white">Duty content</label>
                             </th>
-                            <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Venue name</label>
-                            </th>
+                            
                             <th class="border border-gray-700 w-1/10 p-2">
                             <label class="block text-base/7 font-semibold text-white">Position</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
                             <label class="block text-base/7 font-semibold text-white">Comments</label>
                             </th>
-                            <th class="border border-gray-700 w-1/10 p-2">
-                                <label class="block text-base/7 font-semibold text-white">Event style</label>
-                            </th>   
+                             
                         </tr>`;
 
     const skipKeys = ["_token"];
@@ -286,7 +283,12 @@ function copyRow(id){
         <input name="orders[${latest}][event_start_time]" value="${event_start_time}"  type="time"  class="w-auto border-0" required/>
     </td>
     <td class="border border-gray-700 p-2">
-        <input name="orders[${latest}][event_end_time]" value="${event_end_time}" type="time"  class="w-auto border-0" required/>
+            <input class="w-full border-0" id="input5" list="swt" value="${event_end_time}" name="orders[0][event_end_time]" required placeholder="XX:XX"/>
+            <datalist id="swt">
+                <option value="S">
+                <option value="W">
+                <option value="T">
+            </datalist>        
     </td>
     <td class="border border-gray-700 p-2">
         <input name="orders[${latest}][guests_number]"  value="${guests_number}" type="number" class="w-full border-0" required/>
@@ -339,12 +341,20 @@ function addNewRow(){
     <td class="border border-gray-700 p-2">
         <input name="orders[${latest}][workers_number]" id="input3"  type="number" class="w-full border-0" required/>
     </td>
+    
     <td class="border border-gray-700 p-2">
         <input name="orders[${latest}][event_start_time]" id="input4"  type="time"  class="w-auto border-0" required/>
     </td>
+
     <td class="border border-gray-700 p-2">
-        <input name="orders[${latest}][event_end_time]" id="input5"  type="time"  class="w-auto border-0" required/>
+            <input name="orders[${latest}][event_end_time]" class="w-full border-0" id="input5" list="swt"  required placeholder="XX:XX"/>
+            <datalist id="swt">
+                <option value="S">
+                <option value="W">
+                <option value="T">
+            </datalist>
     </td>
+
     <td class="border border-gray-700 p-2">
         <input name="orders[${latest}][guests_number]" id="input6"  type="number" class="w-full border-0" required/>
     </td>
