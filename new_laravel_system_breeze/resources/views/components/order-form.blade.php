@@ -69,66 +69,80 @@
 @elseif($coordinatorOrders)
 <tr id="{{$order->id}}">
     
-    <input type="hidden" name="orders[0][hotel_id]" value="{{ auth()->user()->hotel_id }}">
+    {{-- <input type="hidden" name="orders[0][hotel_id]" value="{{ auth()->user()->hotel_id }}">
 
     <input type="hidden" name="orders[0][dep_id]" value="{{ auth()->user()->dep_id }}">
 
-    <input type="hidden" name="orders[0][user_id]" value="{{ auth()->user()->id }}">
+    <input type="hidden" name="orders[0][user_id]" value="{{ auth()->user()->id }}"> --}}
 
     <td class="border border-gray-700 p-2">
-        <input name="orders[0][event_date]" type="text" id="input0" class="w-full border-0 " value="{{$order->event_date}}" readonly/>
-    </td>
-
-    <td class="border border-gray-700 p-2">
-        <input name="orders[0][event_style]"  id="input11" type="text" class="w-full border-0"  value="{{$order->hotel_name}}" readonly/>
-    </td>
-    <td class="border border-gray-700 p-2">
-        <input name="orders[0][event_style]"  id="input11" type="text" class="w-full border-0"  value="{{$order->name}}" readonly/>
+        <p class="w-full border-0">{{$order->event_date}}</p>
+        {{-- <input name="orders[0][event_date]" type="text" id="input0" class="w-full border-0 " value="{{$order->event_date}}" readonly/> --}}
     </td>
 
     <td class="border border-gray-700 p-2">
-        <input name="orders[0][venue_name]"  id="input8" type="text" class="w-full border-0" value="{{$order->venue_name}}"  readonly/>
+        <p class="w-full border-0">{{$order->hotel_name}}</p>
+        {{-- <input name="orders[0][event_style]"  id="input11" type="text" class="w-full border-0"  value="{{$order->hotel_name}}" readonly/> --}}
+    </td>
+    <td class="border border-gray-700 p-2 max-w-[200px] break-words border">
+        <p class="w-full border-0">{{$order->name}}</p>
+        {{-- <input name="orders[0][event_style]"  id="input11" type="text" class="w-full border-0"  value="{{$order->name}}" readonly/> --}}
     </td>
 
     <td class="border border-gray-700 p-2">
-        <input name="orders[0][event_style]"  id="input11" type="text" class="w-full border-0"  value="{{$order->event_style}}" readonly/>
+        <p class="w-full border-0">{{$order->venue_name}}</p>
+        {{-- <input name="orders[0][venue_name]"  id="input8" type="text" class="w-full border-0" value="{{$order->venue_name}}"  readonly/> --}}
     </td>
 
     <td class="border border-gray-700 p-2">
-        <input name="orders[0][event_start_time]" id="input4" type="time"  class="w-auto border-0" value="{{$order->event_start_time}}"  readonly />
+        <p class="w-full border-0">{{$order->event_style}}</p>
+        {{-- <input name="orders[0][event_style]"  id="input11" type="text" class="w-full border-0"  value="{{$order->event_style}}" readonly/> --}}
     </td>
 
     <td class="border border-gray-700 p-2">
-        <input name="orders[0][event_end_time]"   id="input5" type="time"  class="w-auto border-0" value="{{$order->event_end_time}}"  readonly/>
+        <p class="w-full border-0">{{$order->event_start_time}}</p>
+        {{-- <input name="orders[0][event_start_time]" id="input4" type="time"  class="w-auto border-0" value="{{$order->event_start_time}}"  readonly /> --}}
     </td>
 
     <td class="border border-gray-700 p-2">
-        <input name="orders[0][position]"   id="input9" type="text" class="w-full border-0" value="{{$order->position}}"  readonly/>
+         <p class="w-full border-0">{{$order->event_end_time}}</p>
+        {{-- <input name="orders[0][event_end_time]"   id="input5" type="time"  class="w-auto border-0" value="{{$order->event_end_time}}"  readonly/> --}}
     </td>
 
     <td class="border border-gray-700 p-2">
-        <input  name="orders[0][work_start_time]"  id="input1" type="time"  class="w-auto border-0" value="{{$order->work_start_time}}"  readonly />
+         <p class="w-full border-0">{{$order->position}}</p>
+        {{-- <input name="orders[0][position]"   id="input9" type="text" class="w-full border-0" value="{{$order->position}}"  readonly/> --}}
+    </td>
+
+    <td class="border border-gray-700 p-2">
+         <p class="w-full border-0">{{$order->work_start_time}}</p>
+        {{-- <input  name="orders[0][work_start_time]"  id="input1" type="time"  class="w-auto border-0" value="{{$order->work_start_time}}"  readonly /> --}}
     </td>
     <td class="border border-gray-700 p-2">
-        <input name="orders[0][work_end_time]"  id="input2" type="time" class="w-auto border-0" value="{{$order->work_end_time}}"   readonly/>
+         <p class="w-full border-0">{{$order->work_end_time}}</p>
+        {{-- <input name="orders[0][work_end_time]"  id="input2" type="time" class="w-auto border-0" value="{{$order->work_end_time}}"   readonly/> --}}
     </td>
     <td class="border border-gray-700 p-2">
-        <input  name="orders[0][workers_number]" id="input3" type="number" class="w-full border-0" value="{{$order->workers_number}}" readonly />
+         <p class="w-full border-0">{{$order->workers_number}}</p>
+        {{-- <input  name="orders[0][workers_number]" id="input3" type="number" class="w-full border-0" value="{{$order->workers_number}}" readonly /> --}}
     </td>
    
     <td class="border border-gray-700 p-2">
-        <input  name="orders[0][guests_number]" id="input6" type="number" class="w-full border-0" value="{{$order->guests_number}}" readonly/>
+         <p class="w-full border-0">{{$order->guests_number}}</p>
+        {{-- <input  name="orders[0][guests_number]" id="input6" type="number" class="w-full border-0" value="{{$order->guests_number}}" readonly/> --}}
     </td>
     <td class="border border-gray-700 p-2">
-        <input  name="orders[0][duty_content]" id="input7" type="text" class="w-full border-0" value="{{$order->duty_content}}"  readonly/>
+         <p class="w-full border-0">{{$order->duty_content}}</p>
+        {{-- <input  name="orders[0][duty_content]" id="input7" type="text" class="w-full border-0" value="{{$order->duty_content}}"  readonly/> --}}
     </td>
    
     <td class="border border-gray-700 p-2">
-        <input name="orders[0][comments]"  id="input10" type="text" class="w-full border-0"  value="{{$order->comments}}"  readonly/>
+         <p class="w-full border-0" > {{$order->comments}}</p>
+        {{-- <input name="orders[0][comments]"  id="input10" type="text" class="w-full border-0"  value="{{$order->comments}}"  readonly/> --}}
     </td>
 
     <td class="border border-gray-700 p-2">
-        <input class="p-2.5" id="{{"input" . $order->id}}" type="checkbox">
+        <input  name="orders[]" class="p-2.5" id="{{"input" . $order->id}}" value="{{$order->id}}" type="checkbox">
     </td>
     
 </tr>

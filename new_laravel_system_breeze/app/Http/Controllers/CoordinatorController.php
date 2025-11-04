@@ -10,11 +10,8 @@ use Illuminate\Support\Facades\DB;
 
 class CoordinatorController extends Controller
 {
-    public function index(){
-        return view("coordinator.dashboard");
-    }
 
-    public function orders(){
+    public function index(){
         $user = Auth::user();
         // $hotel = DB::table("orders")
         //     ->join("hotels", "orders.hotel_id", "=", "hotels.id")
@@ -32,6 +29,16 @@ class CoordinatorController extends Controller
             ->paginate(14);
             
         return view('coordinator.orders', ["CoordinatorsOrders" =>$orders]);
+    }
+
+    public function store(){
+        $orders_id = request()->orders;
+        foreach($orders_id as $key => $value){
+            $order = Order::findOrFail($value);
+            $order->is_done = true;
+            $order->save();
+        }
+        return redirect("/coordinator/orders");
     }
 
     public function history(){

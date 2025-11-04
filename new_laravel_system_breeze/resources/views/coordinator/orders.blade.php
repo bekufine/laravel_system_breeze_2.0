@@ -11,14 +11,14 @@
     <div class="py-12" >
         <div class="max-w-full mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <form  class="border-b border-white/10 p-7 rounded-lg" action="{{ route('order.store') }}" method="POST">
+                <form id = "orderForm" class="border-b border-white/10 p-7 rounded-lg" action="{{ url('/coordinator/orders') }}" method="POST">
                     @csrf 
                     <table class="table-fixed w-full border border-gray-700 text-center">
                         <thead> 
                             <tr class="bg-gray-800 text-white">
                                 
                                 <th class="border border-gray-700 w-1/10 p-2">
-                                    <label>Event date</label>
+                                    <label>日付</label>
                                 </th>
 
                                 <th class="border border-gray-700 w-1/10 p-2">
@@ -97,11 +97,11 @@
                     <div class="mt-6 flex justify-end gap-4">
                         <button id="cancelPreview"
                                 class="px-4 py-2 bg-gray-600 hover:bg-gray-500 rounded-md">
-                        Исправить
+                        修正
                         </button>
                         <button id="confirmSubmit"
                                 class="px-4 py-2 bg-green-600 hover:bg-green-500 rounded-md">
-                        Подтвердить и отправить
+                        確認する
                         </button>
                     </div>
             </dialog>
@@ -117,3 +117,83 @@
     </div>
 
 </x-app-layout>
+
+<script>
+    const form = document.getElementById('orderForm');
+    const preview = document.getElementById('previewContent');
+    const modal = document.getElementById('previewModal');
+    document.getElementById('previewBtn').addEventListener('click', () => {
+    const formData = new FormData(form);
+    
+
+  let html = `<table class="border rounded-lg table-fixed w-full border-gray-700 text-center"> <thead>
+                        <tr class="bg-gray-800 text-white">
+                            <th class="border border-gray-700 w-1/10 p-2">
+                                <label>日付</label>
+                            </th>
+                            <th class="border border-gray-700 w-1/10 p-2">
+                                <label>ホテル名</label>
+                            </th>
+                            <th class="border border-gray-700 w-1/10 p-2">
+                                <label>デパート名</label>
+                            </th>
+                            <th class="border border-gray-700 w-1/10 p-2">
+                                <label class="block text-base/7 font-semibold text-white">会場名</label>
+                            </th>
+                            <th class="border border-gray-700 w-1/10 p-2">
+                                <label class="block text-base/7 font-semibold text-white">イベントスタイル</label>
+                            </th>  
+                            <th class="border border-gray-700 w-1/10 p-2">
+                                <label class="block text-base/7 font-semibold text-white">始業時間</label>
+                            </th>
+                            <th class="border border-gray-700 w-1/10 p-2">
+                                <label class="block text-base/7 font-semibold text-white">終業予定</label>
+                            </th>
+                            <th class="border border-gray-700 w-1/10 p-2">
+                                <label class="block text-base/7 font-semibold text-white">役職</label>
+                            </th>
+                            <th class="border border-gray-700 w-1/10 p-2">
+                                <label class="block text-base/7 font-semibold text-white">作業開始時刻</label>
+                            </th>
+                            <th class="border border-gray-700 w-1/10 p-2">
+                                <label class="block text-base/7 font-semibold text-white">作業終了時刻</label>
+                            </th>
+                            <th class="border border-gray-700 w-1/10 p-2">
+                                <label class="block text-base/7 font-semibold text-white">労働者数</label>
+                            </th>
+                            <th class="border border-gray-700 w-1/10 p-2">
+                                <label class="block text-base/7 font-semibold text-white">ゲスト数</label>
+                            </th>
+                            <th class="border border-gray-700 w-1/10 p-2">
+                                <label class="block text-base/7 font-semibold text-white">義務内容</label>
+                            </th>
+                            <th class="border border-gray-700 w-1/10 p-2">
+                                <label class="block text-base/7 font-semibold text-white">コメント</label>
+                            </th>
+                        </tr>`;
+
+
+    formData.forEach((value, key) => {
+        if (key !== '_token') {
+            html+='<tr>';
+            let trelement = document.getElementById(value);
+            const pElements = trelement.querySelectorAll("p");
+            pElements.forEach(element => {
+                html += `
+                <td class="border border-gray-700 p-2">
+                        <p class="break-words" >${element.innerHTML}</p>
+                </td>`;
+            });
+            html+='</tr>'
+    }
+    });
+    
+    preview.innerHTML = html;
+    modal.showModal();
+});
+document.getElementById('cancelPreview').addEventListener('click', () => {
+    modal.close();
+    document.body.classList.remove('overflow-hidden');
+});
+document.getElementById('confirmSubmit').addEventListener('click', () => form.submit());
+</script>

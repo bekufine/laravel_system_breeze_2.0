@@ -36,10 +36,11 @@ Route::middleware(['auth', 'role:coordinator'])->prefix('coordinator')->name('co
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/dashboard',[CoordinatorController::class, "index"])->name('dashboard');
+    // Route::get('/dashboard',[CoordinatorController::class, "index"])->name('dashboard');
+    Route::view('/dashboard',"coordinator.dashboard")->name('dashboard');
 
-    Route::get('/orders', [CoordinatorController::class, "orders"])->name("orders");
-
+    Route::get('/orders', [CoordinatorController::class, "index"])->name("orders");
+    Route::post('/orders', [CoordinatorController::class, "store"])->name("coor.store");
     Route::get('/history', [CoordinatorController::class, 'history'])->name("history");
 });
 

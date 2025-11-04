@@ -15,6 +15,6 @@ class Order extends Model
         'event_date', 'work_start_time', 'work_end_time',
         'workers_number', 'event_start_time', 'event_end_time',
         'guests_number', 'duty_content', 'venue_name',
-        'position', 'comments', 'event_style'
+        'position', 'comments', 'event_style', 'is_done'
     ];
 }
