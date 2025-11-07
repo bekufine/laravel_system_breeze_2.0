@@ -8,10 +8,50 @@
         <p>{{$order->id}}</p>
         
     @endforeach --}}
+
+    @if(session('success'))
+            <div class="absolute top-[6%] left-[45%] p-4 bg-[#F0EDED] rounded-lg " >
+                {{-- {{ session('success') }} --}}
+                <p>ご注文は履歴リストに移動されました ✅</p>
+            </div>
+    @endif
+    @if(session('error'))
+        <div class="absolute top-[6%] left-[45%] p-4 bg-[#F0EDED] rounded-lg " >
+            {{-- {{ session('success') }} --}}
+            <p>{{session("error")}} 🛑</p>
+        </div>
+    @endif
     <div class="py-12" >
+        <div class =" mb-9 ml-9">
+            <form action="" class="inline-flex items-center gap-4">
+                <label for="hotel">ホテル名:</label>
+                <select name="hotel" id="">
+                    <option value="">--select hotel--</option>
+                    <option value=""></option>
+                    <option value=""></option>
+                </select>
+                <label for="department">デパート名:</label>
+                <select name="department" id="">
+                    <option value="">--select department--</option>
+                    <option value=""></option>
+                    <option value=""></option>
+                </select>
+                <label for="date">日付:</label>
+                <select name="date" id="">
+                    <option value="">--select date--</option>
+                    <option value=""></option>
+                    <option value=""></option>
+                </select>
+                <div class="inline-flex px-10 gap-7 ">
+                    <button type="button" class="bg-red-300 py-2 px-5  border rounded-lg">リセット</button>
+                    <button type="button" class="bg-green-300 py-2 px-5 border rounded-lg">検索</button>
+                </div>
+            </form>
+        </div>
+        
         <div class="max-w-full mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <form id = "orderForm" class="border-b border-white/10 p-7 rounded-lg" action="{{ url('/coordinator/orders') }}" method="POST">
+                <form id = "orderForm" class="border-b border-white/10 p-7 rounded-lg"  method="POST">
                     @csrf 
                     <table class="table-fixed w-full border border-gray-700 text-center">
                         <thead> 
@@ -108,8 +148,9 @@
             </div>
             
         </div>
-        <div class="flex justify-center w-full">
-            <button id="previewBtn" type="button" class="btn btn-primary bg-[#43d175] p-2 rounded-md w-40 mt-7 cursor-pointer">確認する</button>
+        <div class="flex justify-center w-full gap-12">
+            <button  form="orderForm" id="previewBtn" type="submit" formaction="{{ route('coordinator.store') }}" class="btn btn-primary bg-[#43d175] p-2 rounded-md w-40 mt-7 cursor-pointer">確認する</button>
+            <button form="orderForm" type="submit" formaction="{{ route('coordinator.export') }}" class="btn btn-primary bg-gray-800 text-white p-2 rounded-md w-40 mt-7 cursor-pointer">Excel形式で<br>ダウンロード</button>
         </div> 
         <div class="my-10">
             {{$CoordinatorsOrders->links()}}
@@ -190,10 +231,10 @@
     
     preview.innerHTML = html;
     modal.showModal();
-});
-document.getElementById('cancelPreview').addEventListener('click', () => {
-    modal.close();
-    document.body.classList.remove('overflow-hidden');
-});
-document.getElementById('confirmSubmit').addEventListener('click', () => form.submit());
+    });
+    document.getElementById('cancelPreview').addEventListener('click', () => {
+        modal.close();
+        document.body.classList.remove('overflow-hidden');
+    });
+    document.getElementById('confirmSubmit').addEventListener('click', () => form.submit());
 </script>

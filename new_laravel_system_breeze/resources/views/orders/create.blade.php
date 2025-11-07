@@ -19,7 +19,7 @@
                         <thead >
                         <tr class="bg-gray-800 text-white">
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label>イベント開催日</label>
+                            <label>日付</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
                             <label class="block text-base/7 font-semibold text-white">作業開始時刻</label>
@@ -97,10 +97,10 @@
             </button>
             <button id="confirmSubmit"
                     class="px-4 py-2 bg-green-600 hover:bg-green-500 rounded-md">
-            確認
-    </button>
-  </div>
-</dialog>
+                確認
+            </button>
+        </div>
+    </dialog>
 </x-app-layout>
 <script>
     var latest = 0;
@@ -115,39 +115,55 @@
 
   let html = `<table class="border rounded-lg table-fixed w-full border-gray-700 text-center"> <thead>
                         <tr class="bg-gray-800 text-white">
+
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label>日付</label>
+                                <label>日付</label>
                             </th>
+
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">会場名</label>
+                                <label class="block text-base/7 font-semibold text-white">作業開始時刻</label>
                             </th>
+
                             <th class="border border-gray-700 w-1/10 p-2">
-                                <label class="block text-base/7 font-semibold text-white">Event style</label>
-                            </th>  
-                            <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">始業時間</label>
+                                <label class="block text-base/7 font-semibold text-white">作業終了時刻</label>
                             </th>
+
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">終業予定</label>
+                                <label class="block text-base/7 font-semibold text-white">労働者数</label>
                             </th>
+
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">発注人数</label>
+                                <label class="block text-base/7 font-semibold text-white">イベント開始時刻</label>
                             </th>
-                            
+
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Guests number</label>
+                                <label class="block text-base/7 font-semibold text-white">イベント終了時刻</label>
                             </th>
+
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Duty content</label>
+                                <label class="block text-base/7 font-semibold text-white">ゲスト数</label>
                             </th>
-                            
+
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Position</label>
+                                <label class="block text-base/7 font-semibold text-white">義務内容</label>
                             </th>
+
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Comments</label>
+                                <label class="block text-base/7 font-semibold text-white">会場名</label>
                             </th>
-                             
+
+                            <th class="border border-gray-700 w-1/10 p-2">
+                                <label class="block text-base/7 font-semibold text-white">役職</label>
+                            </th>
+
+                            <th class="border border-gray-700 w-1/10 p-2">
+                                <label class="block text-base/7 font-semibold text-white">コメント</label>
+                            </th>
+
+                            <th class="border border-gray-700 w-1/10 p-2">
+                                <label class="block text-base/7 font-semibold text-white">イベントスタイル</label>
+                            </th>
+                              
                         </tr>`;
 
     const skipKeys = ["_token"];

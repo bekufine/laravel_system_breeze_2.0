@@ -4,6 +4,8 @@ use App\Http\Controllers\CoordinatorController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\OrdersController;
+use App\Http\Controllers\Api\UsersController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,9 +41,14 @@ Route::middleware(['auth', 'role:coordinator'])->prefix('coordinator')->name('co
     // Route::get('/dashboard',[CoordinatorController::class, "index"])->name('dashboard');
     Route::view('/dashboard',"coordinator.dashboard")->name('dashboard');
 
-    Route::get('/orders', [CoordinatorController::class, "index"])->name("orders");
-    Route::post('/orders', [CoordinatorController::class, "store"])->name("coor.store");
-    Route::get('/history', [CoordinatorController::class, 'history'])->name("history");
+    Route::get('/orders', [CoordinatorController::class, "index"])->name('orders');
+    Route::post('/orders', [CoordinatorController::class, "store"])->name('store');
+    Route::get('/history', [CoordinatorController::class, 'history'])->name('history');
+    Route::post('/export', [CoordinatorController::class, "export"])->name('export');
+
+    Route::get('/api/orders', [OrdersController::class, 'index'])->name('orders.api');
+    Route::get('/api/hotels', [OrdersController::class, 'hotels'])->name('orders.hotel');
+    Route::get('/api/users', [UsersController::class, 'index'])->name('users.api');
 });
 
 //нужно создать контроллер для координаторов и засунуть все эти вьюшки туда 
