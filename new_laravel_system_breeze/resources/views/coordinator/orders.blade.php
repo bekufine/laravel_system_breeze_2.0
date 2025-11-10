@@ -25,25 +25,20 @@
         <div class =" mb-9 ml-9">
             <form action="" class="inline-flex items-center gap-4">
                 <label for="hotel">ホテル名:</label>
-                <select name="hotel" id="">
+                <select name="hotel" id="hotel-select" onchange='hotelDefiner(this.value)' >
                     <option value="">--select hotel--</option>
-                    <option value=""></option>
-                    <option value=""></option>
+                    @foreach($hotels as $hotel)
+                        <option value="{{$hotel->id}}">{{$hotel->hotel_name}}</option>  
+                    @endforeach
                 </select>
                 <label for="department">デパート名:</label>
-                <select name="department" id="">
+                <select  name="department" id="department-select">
                     <option value="">--select department--</option>
-                    <option value=""></option>
-                    <option value=""></option>
                 </select>
                 <label for="date">日付:</label>
-                <select name="date" id="">
-                    <option value="">--select date--</option>
-                    <option value=""></option>
-                    <option value=""></option>
-                </select>
+                <input type="date" value="{{ date("Y-m-d") }}" id="date-select">
                 <div class="inline-flex px-10 gap-7 ">
-                    <button type="button" class="bg-red-300 py-2 px-5  border rounded-lg">リセット</button>
+                    <button type="button" id ="clearSelectButton" onclick="clearFilterInputs()" class="bg-red-300 py-2 px-5  border rounded-lg">リセット</button>
                     <button type="button" class="bg-green-300 py-2 px-5 border rounded-lg">検索</button>
                 </div>
             </form>
@@ -149,7 +144,7 @@
             
         </div>
         <div class="flex justify-center w-full gap-12">
-            <button  form="orderForm" id="previewBtn" type="submit" formaction="{{ route('coordinator.store') }}" class="btn btn-primary bg-[#43d175] p-2 rounded-md w-40 mt-7 cursor-pointer">確認する</button>
+            <button  form="orderForm" id="previewBtn" type="button" formaction="{{ route('coordinator.store') }}" class="btn btn-primary bg-[#43d175] p-2 rounded-md w-40 mt-7 cursor-pointer">確認する</button>
             <button form="orderForm" type="submit" formaction="{{ route('coordinator.export') }}" class="btn btn-primary bg-gray-800 text-white p-2 rounded-md w-40 mt-7 cursor-pointer">Excel形式で<br>ダウンロード</button>
         </div> 
         <div class="my-10">
@@ -163,78 +158,113 @@
     const form = document.getElementById('orderForm');
     const preview = document.getElementById('previewContent');
     const modal = document.getElementById('previewModal');
+    const hotelSelect = document.getElementById("hotel-select");
+    const departmentSelect = document.getElementById("department-select");
     document.getElementById('previewBtn').addEventListener('click', () => {
-    const formData = new FormData(form);
-    
-
-  let html = `<table class="border rounded-lg table-fixed w-full border-gray-700 text-center"> <thead>
-                        <tr class="bg-gray-800 text-white">
-                            <th class="border border-gray-700 w-1/10 p-2">
-                                <label>日付</label>
-                            </th>
-                            <th class="border border-gray-700 w-1/10 p-2">
-                                <label>ホテル名</label>
-                            </th>
-                            <th class="border border-gray-700 w-1/10 p-2">
-                                <label>デパート名</label>
-                            </th>
-                            <th class="border border-gray-700 w-1/10 p-2">
-                                <label class="block text-base/7 font-semibold text-white">会場名</label>
-                            </th>
-                            <th class="border border-gray-700 w-1/10 p-2">
-                                <label class="block text-base/7 font-semibold text-white">イベントスタイル</label>
-                            </th>  
-                            <th class="border border-gray-700 w-1/10 p-2">
-                                <label class="block text-base/7 font-semibold text-white">始業時間</label>
-                            </th>
-                            <th class="border border-gray-700 w-1/10 p-2">
-                                <label class="block text-base/7 font-semibold text-white">終業予定</label>
-                            </th>
-                            <th class="border border-gray-700 w-1/10 p-2">
-                                <label class="block text-base/7 font-semibold text-white">役職</label>
-                            </th>
-                            <th class="border border-gray-700 w-1/10 p-2">
-                                <label class="block text-base/7 font-semibold text-white">作業開始時刻</label>
-                            </th>
-                            <th class="border border-gray-700 w-1/10 p-2">
-                                <label class="block text-base/7 font-semibold text-white">作業終了時刻</label>
-                            </th>
-                            <th class="border border-gray-700 w-1/10 p-2">
-                                <label class="block text-base/7 font-semibold text-white">労働者数</label>
-                            </th>
-                            <th class="border border-gray-700 w-1/10 p-2">
-                                <label class="block text-base/7 font-semibold text-white">ゲスト数</label>
-                            </th>
-                            <th class="border border-gray-700 w-1/10 p-2">
-                                <label class="block text-base/7 font-semibold text-white">義務内容</label>
-                            </th>
-                            <th class="border border-gray-700 w-1/10 p-2">
-                                <label class="block text-base/7 font-semibold text-white">コメント</label>
-                            </th>
-                        </tr>`;
+        const formData = new FormData(form);
+        let html = `<table class="border rounded-lg table-fixed w-full border-gray-700 text-center"> <thead>
+                            <tr class="bg-gray-800 text-white">
+                                <th class="border border-gray-700 w-1/10 p-2">
+                                    <label>日付</label>
+                                </th>
+                                <th class="border border-gray-700 w-1/10 p-2">
+                                    <label>ホテル名</label>
+                                </th>
+                                <th class="border border-gray-700 w-1/10 p-2">
+                                    <label>デパート名</label>
+                                </th>
+                                <th class="border border-gray-700 w-1/10 p-2">
+                                    <label class="block text-base/7 font-semibold text-white">会場名</label>
+                                </th>
+                                <th class="border border-gray-700 w-1/10 p-2">
+                                    <label class="block text-base/7 font-semibold text-white">イベントスタイル</label>
+                                </th>  
+                                <th class="border border-gray-700 w-1/10 p-2">
+                                    <label class="block text-base/7 font-semibold text-white">始業時間</label>
+                                </th>
+                                <th class="border border-gray-700 w-1/10 p-2">
+                                    <label class="block text-base/7 font-semibold text-white">終業予定</label>
+                                </th>
+                                <th class="border border-gray-700 w-1/10 p-2">
+                                    <label class="block text-base/7 font-semibold text-white">役職</label>
+                                </th>
+                                <th class="border border-gray-700 w-1/10 p-2">
+                                    <label class="block text-base/7 font-semibold text-white">作業開始時刻</label>
+                                </th>
+                                <th class="border border-gray-700 w-1/10 p-2">
+                                    <label class="block text-base/7 font-semibold text-white">作業終了時刻</label>
+                                </th>
+                                <th class="border border-gray-700 w-1/10 p-2">
+                                    <label class="block text-base/7 font-semibold text-white">労働者数</label>
+                                </th>
+                                <th class="border border-gray-700 w-1/10 p-2">
+                                    <label class="block text-base/7 font-semibold text-white">ゲスト数</label>
+                                </th>
+                                <th class="border border-gray-700 w-1/10 p-2">
+                                    <label class="block text-base/7 font-semibold text-white">義務内容</label>
+                                </th>
+                                <th class="border border-gray-700 w-1/10 p-2">
+                                    <label class="block text-base/7 font-semibold text-white">コメント</label>
+                                </th>
+                            </tr>`;
 
 
-    formData.forEach((value, key) => {
-        if (key !== '_token') {
-            html+='<tr>';
-            let trelement = document.getElementById(value);
-            const pElements = trelement.querySelectorAll("p");
-            pElements.forEach(element => {
-                html += `
-                <td class="border border-gray-700 p-2">
-                        <p class="break-words" >${element.innerHTML}</p>
-                </td>`;
-            });
-            html+='</tr>'
-    }
-    });
-    
-    preview.innerHTML = html;
-    modal.showModal();
-    });
+        formData.forEach((value, key) => {
+            if (key !== '_token') {
+                html+='<tr>';
+                let trelement = document.getElementById(value);
+                const pElements = trelement.querySelectorAll("p");
+                pElements.forEach(element => {
+                    html += `
+                    <td class="border border-gray-700 p-2">
+                            <p class="break-words" >${element.innerHTML}</p>
+                    </td>`;
+                });
+                html+='</tr>'
+        }
+        });
+        
+        preview.innerHTML = html;
+        modal.showModal();
+        });
     document.getElementById('cancelPreview').addEventListener('click', () => {
         modal.close();
         document.body.classList.remove('overflow-hidden');
     });
+    async function hotelDefiner(id){
+        let departmentSelect = document.getElementById("department-select")
+        try{
+            if (id==="") return;
+            const response = await fetch(`http://127.0.0.1:8000/coordinator/api/departments/${id}`)
+            if (!response.ok){
+                throw new Error("could not fetch resurces")
+            }
+            const data = await response.json();
+            departmentSelect.innerHTML = '';
+            departmentSelect.innerHTML = '<option value="">--select department--</option>';
+            Object.keys(data).forEach(key=>{
+                const option = document.createElement("option");
+                option.value = data[key]["id"];
+                option.textContent = data[key]["name"];
+                departmentSelect.appendChild(option);
+            });
+        }
+        catch(error){
+            console.error(error);
+        }
+    }
+    function clearFilterInputs(){
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
+        let dateInput = document.getElementById("date-select");
+        hotelSelect.selectedIndex = "";
+        departmentSelect.selectedIndex = "";
+        dateInput.value = formattedDate;
+
+    }
+
     document.getElementById('confirmSubmit').addEventListener('click', () => form.submit());
 </script>

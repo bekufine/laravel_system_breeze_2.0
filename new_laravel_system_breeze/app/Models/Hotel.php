@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\HasApiTokens;
 
-class Hotel extends Model
+class Hotel extends Model  
 {
-    use HasFactory;
+    use HasFactory , HasApiTokens;
     protected $table = 'hotels';
 
     protected $fillable =[

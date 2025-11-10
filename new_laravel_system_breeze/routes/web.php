@@ -47,8 +47,8 @@ Route::middleware(['auth', 'role:coordinator'])->prefix('coordinator')->name('co
     Route::post('/export', [CoordinatorController::class, "export"])->name('export');
 
     Route::get('/api/orders', [OrdersController::class, 'index'])->name('orders.api');
-    Route::get('/api/hotels', [OrdersController::class, 'hotels'])->name('orders.hotel');
-    Route::get('/api/users', [UsersController::class, 'index'])->name('users.api');
+    Route::get('/api/departments/{hotel}', [OrdersController::class, 'departments'])->name('orders.departments');
+    // Route::get('/api/users', [UsersController::class, 'index'])->name('users.api');
 });
 
 //нужно создать контроллер для координаторов и засунуть все эти вьюшки туда 

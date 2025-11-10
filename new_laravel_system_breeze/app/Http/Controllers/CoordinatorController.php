@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Exports\OrdersExport;
+use App\Models\Hotel;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CoordinatorController extends Controller
@@ -30,8 +31,11 @@ class CoordinatorController extends Controller
             ->select('orders.*','hotels.hotel_name', 'departments.name')
             ->orderByDesc('orders.created_at')
             ->paginate(14);
-            
-        return view('coordinator.orders', ["CoordinatorsOrders" =>$orders]);
+
+        $hotels = Hotel::all()
+        ->where("city", "=", $user->city);
+        
+        return view('coordinator.orders', ["CoordinatorsOrders" =>$orders, "hotels" => $hotels]);
     }
 
     public function store(){
