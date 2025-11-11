@@ -12,46 +12,44 @@ use App\Models\Hotel;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CoordinatorController extends Controller
-{
-    
+{   
+    protected $user;     
+    protected $conditions;
+
+    public function __construct()
+        {
+            $this->user = Auth::user();
+            $this->conditions =[
+                ['hotels.city', "=", $this->user->city],
+                ["orders.is_done", "=", false]
+            ];
+        }
+            
     public function index(Request $request){
-        $user = Auth::user();
-        $conditions =[
-            ['hotels.city', "=", $user->city],
-            ["orders.is_done", "=", false]
-        ];
+        
         if($request->input('filter-form')){
             if ($request->filled('hotel')) {
-                $conditions[] = ["orders.hotel_id", "=", $request->hotel];
+                $this->conditions[] = ["orders.hotel_id", "=", $request->hotel];
             }
             if ($request->filled('department')) {
-                $conditions[] = ["orders.dep_id", "=", $request->department];
+                $this->conditions[] = ["orders.dep_id", "=", $request->department];
             }
             if ($request->filled("date")){
-                $conditions[] = ["orders.event_date", "=", $request->date];
+                $this->conditions[] = ["orders.event_date", "=", $request->date];
             }
-            
         }
-
         $orders = DB::table('orders')
             ->join('hotels', 'orders.hotel_id', '=', 'hotels.id')
             ->join("departments", "orders.dep_id", "=", "departments.id")
-            ->where($conditions)
+            ->where($this->conditions)
             ->select('orders.*','hotels.hotel_name', 'departments.name')
             ->orderByDesc('orders.created_at')
-            ->paginate(14);
-
-        
-
-        
-
+            ->paginate(14)
+            ->withQueryString();
         $hotels = Hotel::all()
-        ->where("city", "=", $user->city);
-        
-        
+        ->where("city", "=", $this->user->city);
         return view('coordinator.orders', ["CoordinatorsOrders" =>$orders, "hotels" => $hotels]);
     }
-
     public function store(){
         $orders_id = request()->orders;
         if (empty($orders_id)) {
@@ -64,22 +62,30 @@ class CoordinatorController extends Controller
         }
         return redirect("/coordinator/orders")->with('success', 'ご注文は履歴リストに移動されました ✅');;
     }
-
-    public function history(){
-        $user = Auth::user();
-        
+    public function history(Request $request){
+        $this->conditions[1][2]=true;
+        if($request->input('filter-form')){
+            if ($request->filled('hotel')) {
+                $this->conditions[] = ["orders.hotel_id", "=", $request->hotel];
+            }
+            if ($request->filled('department')) {
+                $this->conditions[] = ["orders.dep_id", "=", $request->department];
+            }
+            if ($request->filled("date")){
+                $this->conditions[] = ["orders.event_date", "=", $request->date];
+            } 
+        };
         $orders_list = DB::table("orders")
         ->join("hotels", "orders.hotel_id", "=" , "hotels.id")
         ->join("departments", "orders.dep_id", "=" , "departments.id")
-        ->where("hotels.city", $user->city)
-        ->where("orders.is_done", true)
+        ->where($this->conditions)
         ->orderByDesc('orders.updated_at')
-        ->paginate(14);
-        
+        ->paginate(14)
+        ->withQueryString();
         $hotels = Hotel::all()
-        ->where("city", "=", $user->city);
+        ->where("city", "=", $this->user->city);
 
-        return view('coordinator.history', ["orders"=>$orders_list, "hotels" => $hotels]);
+        return view('coordinator.history', ["history_orders"=>$orders_list, "hotels" => $hotels]);
     }
 
     public function export() 

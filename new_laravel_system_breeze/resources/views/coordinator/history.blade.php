@@ -7,7 +7,7 @@
     <div class="py-12" >
 
         <div class =" mb-9 ml-9">
-            <form action="{{route("coordinator.orders")}}" method="GET" class="inline-flex items-center gap-4">
+            <form action="{{route("coordinator.history")}}" method="GET" class="inline-flex items-center gap-4">
 
                 <input type="hidden" name="filter-form" value="true"> 
                 {{-- special input to give a sign --}}
@@ -15,7 +15,7 @@
                 <select name="hotel" id="hotel-select" onchange='departmentDefiner(this.value)' >
                     <option value="">--ホテル選んで下さい--</option>
                     @foreach($hotels as $hotel)
-                        <option value="{{$hotel->id}}">{{$hotel->hotel_name}}</option>  
+                        <option value="{{$hotel->id}}"  @if(request()->hotel==$hotel->id) selected @endif>{{$hotel->hotel_name}}</option>  
                     @endforeach
                 </select>
                 <label for="department">デパート名:</label>
@@ -99,7 +99,7 @@
                             </tr>
                         </thead>
                         <tbody id="tbody">
-                            @foreach($orders as $order)
+                            @foreach($history_orders as $order)
                                 <x-order-form :coordinatorHistory="true" :order="$order"/>
                             @endforeach
                         </tbody>
@@ -109,7 +109,7 @@
             </div>
 
             <div class="my-7">
-                {{$orders->links()}}
+                {{$history_orders->links()}}
             </div>
             
         </div>
@@ -129,7 +129,7 @@ async function departmentDefiner(id) {
         }
         const data = await response.json();
         departmentSelect.innerHTML = '';
-        departmentSelect.innerHTML = '<option value="">--デパート選んで下さい--</option>';
+        departmentSelect.innerHTML = '<option value="" >--デパート選んで下さい--</option>';
         Object.keys(data).forEach(key => {
             const option = document.createElement("option");
                 option.value = data[key]["id"];
