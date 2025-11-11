@@ -4,10 +4,6 @@
             {{ __('受注ページ') }}
         </h2>
     </x-slot>
-    {{-- @foreach($orders as $order)
-        <p>{{$order->id}}</p>
-        
-    @endforeach --}}
 
     @if(session('success'))
             <div class="absolute top-[6%] left-[45%] p-4 bg-[#F0EDED] rounded-lg " >
@@ -23,23 +19,26 @@
     @endif
     <div class="py-12" >
         <div class =" mb-9 ml-9">
-            <form action="" class="inline-flex items-center gap-4">
+            <form action="{{route("coordinator.orders")}}" method="GET" class="inline-flex items-center gap-4">
+
+                <input type="hidden" name="filter-form" value="true"> 
+                {{-- special input to give a sign --}}
                 <label for="hotel">ホテル名:</label>
-                <select name="hotel" id="hotel-select" onchange='hotelDefiner(this.value)' >
-                    <option value="">--select hotel--</option>
+                <select name="hotel" id="hotel-select" onchange='departmentDefiner(this.value)'>
+                    <option value="">--ホテル選んで下さい--</option>
                     @foreach($hotels as $hotel)
-                        <option value="{{$hotel->id}}">{{$hotel->hotel_name}}</option>  
+                        <option value="{{$hotel->id}}" {{ old('hotel') == $hotel->id ? 'selected' : '' }}>{{$hotel->hotel_name}}</option>  
                     @endforeach
                 </select>
                 <label for="department">デパート名:</label>
-                <select  name="department" id="department-select">
-                    <option value="">--select department--</option>
+                <select  name="department" id="department-select" :value="{{old("department")}}">
+                    <option value="">--デパート選んで下さい--</option>
                 </select>
                 <label for="date">日付:</label>
-                <input type="date" value="{{ date("Y-m-d") }}" id="date-select">
+                <input name="date" type="date"  id="date-select">
                 <div class="inline-flex px-10 gap-7 ">
                     <button type="button" id ="clearSelectButton" onclick="clearFilterInputs()" class="bg-red-300 py-2 px-5  border rounded-lg">リセット</button>
-                    <button type="button" class="bg-green-300 py-2 px-5 border rounded-lg">検索</button>
+                    <button type="submit" class="bg-green-300 py-2 px-5 border rounded-lg">検索</button>
                 </div>
             </form>
         </div>
@@ -160,6 +159,8 @@
     const modal = document.getElementById('previewModal');
     const hotelSelect = document.getElementById("hotel-select");
     const departmentSelect = document.getElementById("department-select");
+
+    
     document.getElementById('previewBtn').addEventListener('click', () => {
         const formData = new FormData(form);
         let html = `<table class="border rounded-lg table-fixed w-full border-gray-700 text-center"> <thead>
@@ -226,12 +227,12 @@
         
         preview.innerHTML = html;
         modal.showModal();
-        });
+    });
     document.getElementById('cancelPreview').addEventListener('click', () => {
         modal.close();
         document.body.classList.remove('overflow-hidden');
     });
-    async function hotelDefiner(id){
+    async function departmentDefiner(id){
         let departmentSelect = document.getElementById("department-select")
         try{
             if (id==="") return;
@@ -241,7 +242,7 @@
             }
             const data = await response.json();
             departmentSelect.innerHTML = '';
-            departmentSelect.innerHTML = '<option value="">--select department--</option>';
+            departmentSelect.innerHTML = '<option value="">--デパート選んで下さい--</option>';
             Object.keys(data).forEach(key=>{
                 const option = document.createElement("option");
                 option.value = data[key]["id"];
@@ -253,18 +254,10 @@
             console.error(error);
         }
     }
+    
     function clearFilterInputs(){
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, '0');
-        const day = String(today.getDate()).padStart(2, '0');
-        const formattedDate = `${year}-${month}-${day}`;
-        let dateInput = document.getElementById("date-select");
         hotelSelect.selectedIndex = "";
         departmentSelect.selectedIndex = "";
-        dateInput.value = formattedDate;
-
     }
-
     document.getElementById('confirmSubmit').addEventListener('click', () => form.submit());
 </script>

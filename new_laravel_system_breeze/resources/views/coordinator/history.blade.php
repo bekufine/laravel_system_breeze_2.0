@@ -5,6 +5,32 @@
         </h2>
     </x-slot>
     <div class="py-12" >
+
+        <div class =" mb-9 ml-9">
+            <form action="{{route("coordinator.orders")}}" method="GET" class="inline-flex items-center gap-4">
+
+                <input type="hidden" name="filter-form" value="true"> 
+                {{-- special input to give a sign --}}
+                <label for="hotel">ホテル名:</label>
+                <select name="hotel" id="hotel-select" onchange='departmentDefiner(this.value)' >
+                    <option value="">--ホテル選んで下さい--</option>
+                    @foreach($hotels as $hotel)
+                        <option value="{{$hotel->id}}">{{$hotel->hotel_name}}</option>  
+                    @endforeach
+                </select>
+                <label for="department">デパート名:</label>
+                <select  name="department" id="department-select">
+                    <option value="">--デパート選んで下さい--</option>
+                </select>
+                <label for="date">日付:</label>
+                <input name="date" type="date"  id="date-select">
+                <div class="inline-flex px-10 gap-7 ">
+                    <button type="button" id ="clearSelectButton" onclick="clearFilterInputs()" class="bg-red-300 py-2 px-5  border rounded-lg">リセット</button>
+                    <button type="submit" class="bg-green-300 py-2 px-5 border rounded-lg">検索</button>
+                </div>
+            </form>
+        </div>
+        
         <div class="max-w-full mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div  class="border-b border-white/10 p-7 rounded-lg" >
@@ -89,3 +115,35 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    let hotelSelect = document.getElementById("hotel-select");
+    let departmentSelect = document.getElementById("department-select");
+async function departmentDefiner(id) {
+    let departmentSelect = document.getElementById("department-select")
+    try{
+        if (id==="") return
+        const response = await fetch(`http://127.0.0.1:8000/coordinator/api/departments/${id}`);
+        if (!response.ok){
+            throw new Error("could not fetch data");
+        }
+        const data = await response.json();
+        departmentSelect.innerHTML = '';
+        departmentSelect.innerHTML = '<option value="">--デパート選んで下さい--</option>';
+        Object.keys(data).forEach(key => {
+            const option = document.createElement("option");
+                option.value = data[key]["id"];
+                option.textContent = data[key]["name"];
+                departmentSelect.appendChild(option);
+        });
+    }
+    catch(error){
+        console.error(error);
+    }
+    
+}
+function clearFilterInputs(){
+        hotelSelect.selectedIndex = "";
+        departmentSelect.selectedIndex = "";
+    }
+</script>

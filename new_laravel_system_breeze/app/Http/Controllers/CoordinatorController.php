@@ -13,27 +13,41 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class CoordinatorController extends Controller
 {
-
-    public function index(){
+    
+    public function index(Request $request){
         $user = Auth::user();
-        // $hotel = DB::table("orders")
-        //     ->join("hotels", "orders.hotel_id", "=", "hotels.id")
-        //     ->join("departments", "orders.dep_id", "=", "departments.id")
-        //     ->select('hotels.hotel_name', 'departments.name')
-        //     ->get();
-        
+        $conditions =[
+            ['hotels.city', "=", $user->city],
+            ["orders.is_done", "=", false]
+        ];
+        if($request->input('filter-form')){
+            if ($request->filled('hotel')) {
+                $conditions[] = ["orders.hotel_id", "=", $request->hotel];
+            }
+            if ($request->filled('department')) {
+                $conditions[] = ["orders.dep_id", "=", $request->department];
+            }
+            if ($request->filled("date")){
+                $conditions[] = ["orders.event_date", "=", $request->date];
+            }
             
+        }
+
         $orders = DB::table('orders')
             ->join('hotels', 'orders.hotel_id', '=', 'hotels.id')
             ->join("departments", "orders.dep_id", "=", "departments.id")
-            ->where('hotels.city', $user->city)
-            ->where("orders.is_done", false )
+            ->where($conditions)
             ->select('orders.*','hotels.hotel_name', 'departments.name')
             ->orderByDesc('orders.created_at')
             ->paginate(14);
 
+        
+
+        
+
         $hotels = Hotel::all()
         ->where("city", "=", $user->city);
+        
         
         return view('coordinator.orders', ["CoordinatorsOrders" =>$orders, "hotels" => $hotels]);
     }
@@ -53,6 +67,7 @@ class CoordinatorController extends Controller
 
     public function history(){
         $user = Auth::user();
+        
         $orders_list = DB::table("orders")
         ->join("hotels", "orders.hotel_id", "=" , "hotels.id")
         ->join("departments", "orders.dep_id", "=" , "departments.id")
@@ -60,9 +75,11 @@ class CoordinatorController extends Controller
         ->where("orders.is_done", true)
         ->orderByDesc('orders.updated_at')
         ->paginate(14);
-        // $orders_list = Order::where("user_id", $user->id)
-        // ->where("is_done", false)->get();
-        return view('coordinator.history', ["orders"=>$orders_list]);
+        
+        $hotels = Hotel::all()
+        ->where("city", "=", $user->city);
+
+        return view('coordinator.history', ["orders"=>$orders_list, "hotels" => $hotels]);
     }
 
     public function export() 
