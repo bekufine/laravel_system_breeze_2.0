@@ -129,7 +129,7 @@ async function departmentDefiner(id) {
         }
         const data = await response.json();
         departmentSelect.innerHTML = '';
-        departmentSelect.innerHTML = '<option value="" >--デパート選んで下さい--</option>';
+        departmentSelect.innerHTML = '<option value="">--デパート選んで下さい--</option>';
         Object.keys(data).forEach(key => {
             const option = document.createElement("option");
                 option.value = data[key]["id"];

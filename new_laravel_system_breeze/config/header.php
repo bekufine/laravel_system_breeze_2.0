@@ -12,4 +12,9 @@ return [
         ['title' => '受注ページ',  'route' => 'coordinator.orders'],
         ['title' => '履歴',  'route' => 'coordinator.history'],
     ],
+    'area_manager' => [
+        ['title' => 'ダッシュボード', 'route' => 'coordinator.dashboard'],
+        ['title' => '受注ページ',  'route' => 'coordinator.orders'],
+        ['title' => '履歴',  'route' => 'coordinator.history'],
+    ],
 ];

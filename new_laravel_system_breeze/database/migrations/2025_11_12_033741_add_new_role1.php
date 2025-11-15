@@ -20,7 +20,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             // здесь укажите старый набор значений
-            $table->enum('role', ['user', 'coordinator'])->change();
+            $table->enum('role', ['user', 'coordinator',  "admin"])->default("user")->change();
         });
     }
 };

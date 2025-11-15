@@ -13,34 +13,34 @@
                         <thead> 
                         <tr class="bg-gray-800 text-white">
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label>Event date</label>
+                            <label>日付</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">作業開始時刻</label>
+                            <label class="block text-base/7 font-semibold text-white">始業時間</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">作業終了時刻</label>
+                            <label class="block text-base/7 font-semibold text-white">終業時間</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">労働者数</label>
+                            <label class="block text-base/7 font-semibold text-white">発注数</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">イベント開始時刻</label>
+                            <label class="block text-base/7 font-semibold text-white">開始時刻</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">イベント終了時刻</label>
+                            <label class="block text-base/7 font-semibold text-white">終了時刻</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
                             <label class="block text-base/7 font-semibold text-white">ゲスト数</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">義務内容</label>
+                            <label class="block text-base/7 font-semibold text-white">業務内容</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
                             <label class="block text-base/7 font-semibold text-white">会場名</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">役職</label>
+                            <label class="block text-base/7 font-semibold text-white">役職・ポジション</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
                             <label class="block text-base/7 font-semibold text-white">コメント</label>

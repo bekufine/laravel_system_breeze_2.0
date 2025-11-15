@@ -16,7 +16,7 @@ class RoleMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, string $role)
+    public function handle(Request $request, Closure $next, $role)
     {
         // $user = Auth::user();
 
@@ -33,10 +33,10 @@ class RoleMiddleware
             return redirect()->route('login'); 
         }
 
-        if ($user->role->value !== $role) {
+        if ($user->role->value !== $role and $user->role->value!== "area_manager") {
             abort(403);
         }
-
+        
         return $next($request);
        
     }

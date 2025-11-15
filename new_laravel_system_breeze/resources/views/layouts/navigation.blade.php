@@ -1,5 +1,6 @@
 @php
     $role = auth()->user()?->role->value;
+
     $items = config("header.$role") ?? [];
     // dd($role);
 @endphp
@@ -55,12 +56,16 @@
                             </div>
                         </button>
                     </x-slot>
-
+                    
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('プロファイル') }}
-                        </x-dropdown-link>
-
+                        @can('access_to_profile', Auth::user())
+                            <x-dropdown-link :href="route('profile')">
+                                {{ __('プロファイル') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('manager.edit')">
+                                {{ __('管理ページ') }}
+                            </x-dropdown-link>
+                        @endcan
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -103,7 +108,7 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
+                <x-responsive-nav-link :href="route('profile')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
