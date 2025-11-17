@@ -12,7 +12,9 @@
 
     <form method="post" action="{{ route('manager.store.user') }}" class="mt-6 space-y-6">
         @csrf
-        <input type="hidden" value="{{Auth::user()->city}}">
+
+        <input name ="city" type="hidden" value="{{Auth::user()->city}}">
+
         <div>
 			<x-input-label for="hotel_id" :value="__('ホテル名')" /> 
             <select name="hotel_id" id="hotel-select" onchange="departmentDefiner(this.value)" class="mt-1 rounded-md border-gray-300">

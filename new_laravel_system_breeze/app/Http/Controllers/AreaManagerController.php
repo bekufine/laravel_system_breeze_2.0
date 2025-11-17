@@ -20,9 +20,15 @@ class AreaManagerController extends Controller
 
     public function index(Request $request){
         $hotels  = Hotel::all()->where("city", "=", $this->user->city);
+        $coordinators = User::all()->where("city", "=", $this->user->city)
+        ->where("role" ,"=", "coordinator");
+        $users = User::all()->where("city", "=", $this->user->city)
+        ->where("role" ,"=", "user");
         return view("manager.manage", [
             'user' => $request->user(),
-            "hotels"=>$hotels
+            "hotels"=>$hotels,
+            "coordinators"=>$coordinators,
+            "users"=>$users
         ]);
     }
     public function store_hotel(Request $request){
@@ -49,12 +55,14 @@ class AreaManagerController extends Controller
 
     public function store_user(Request $request){
         $validated = $request->validateWithBag("create_user",[
+            "city"=>"required|string",
             "hotel_id"=>"required|integer",
             "dep_id"=>"required|integer",
             "name"=>"required|string|min:3",
             "email"=>"email|unique:users,email",
             "user_logid"=>"required|string|min:3|unique:users,user_logid",
             "password"=>["required", Password::min(6), 'confirmed']
+
         ],[
             'email.unique' => 'このメールアドレスは既に登録されています。',
             'user_logid.unique' => 'このユーザー名は既に使用されています。',

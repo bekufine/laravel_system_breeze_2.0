@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware(['auth', 'role:coordinator'])->prefix('coordinator')->name('coordinator.')->group(function () {
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Route::get('/dashboard',[CoordinatorController::class, "index"])->name('dashboard');
@@ -53,6 +53,12 @@ Route::middleware(['auth', 'role:coordinator'])->prefix('coordinator')->name('co
 
 Route::middleware(["auth", "role:area_manager"])->group(function(){
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::get("/users/{user}/edit", [ProfileController::class, 'editUser'])->name('user.edit');
+    Route::patch("/users/{user}", [ProfileController::class, 'updateUser'])->name('user.update');
+    
+
     Route::get("/management", [AreaManagerController::class, "index"])->name('manager.edit');
     Route::post('/add_hotel', [AreaManagerController::class, 'store_hotel'])->name('manager.store.hotel');
     Route::post('/add_department', [AreaManagerController::class, 'store_department'])->name('manager.store.department');  
