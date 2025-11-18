@@ -21,15 +21,15 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function editUser(User $user) {
-        return view("user.edit", ["user"=>$user]);
-    }
+    // public function editUser(User $user) {
+    //     return view("user.edit", ["user"=>$user]);
+    // }
 
     /**
      * Update the user's profile information.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
+    {   
         $request->user()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {

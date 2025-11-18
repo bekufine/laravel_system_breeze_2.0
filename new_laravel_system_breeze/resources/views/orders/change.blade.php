@@ -1,12 +1,7 @@
-<?php
-
-	
-
-?>
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Change order') }}
+            {{ __('発注変化') }}
         </h2>
     </x-slot>
     @if (session('success'))
@@ -36,40 +31,40 @@
                         <thead>
                         <tr class="bg-gray-800 text-white">
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label>Event date</label>
+                            <label>日付</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Work start time</label>
+                            <label class="block text-base/7 font-semibold text-white">始業時間</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Work end time</label>
+                            <label class="block text-base/7 font-semibold text-white">終業時間</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Workers number</label>
+                            <label class="block text-base/7 font-semibold text-white">発注数</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Event start time</label>
+                            <label class="block text-base/7 font-semibold text-white">開始時刻</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Event end time</label>
+                            <label class="block text-base/7 font-semibold text-white">終了時刻</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Guests number</label>
+                            <label class="block text-base/7 font-semibold text-white">ゲスト数</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Duty content</label>
+                            <label class="block text-base/7 font-semibold text-white">業務内容</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Venue name</label>
+                            <label class="block text-base/7 font-semibold text-white">会場名</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Position</label>
+                            <label class="block text-base/7 font-semibold text-white">役職・ポジション</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                            <label class="block text-base/7 font-semibold text-white">Comments</label>
+                            <label class="block text-base/7 font-semibold text-white">コメント</label>
                             </th>
                             <th class="border border-gray-700 w-1/10 p-2">
-                                <label class="block text-base/7 font-semibold text-white">Event style</label>
+                                <label class="block text-base/7 font-semibold text-white">イベントスタイル</label>
                             </th>
                             
                         </tr>

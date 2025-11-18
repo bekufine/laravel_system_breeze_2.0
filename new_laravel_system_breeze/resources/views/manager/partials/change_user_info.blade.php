@@ -10,10 +10,8 @@
     </header>
 
 
-    <form method="post" action="{{ route('profile') }}" class="mt-2 space-y-6">
-        @csrf
-
-		<select name="" id="">
+    <form method="GET" action="{{ route('user.edit') }}" class="mt-2 space-y-6">
+		<select name="id" id="">
 			<option value="">--オプション--</option>
 			@foreach($users as $user)
 				<option value="{{$user->id}}">{{$user->name}}</option>

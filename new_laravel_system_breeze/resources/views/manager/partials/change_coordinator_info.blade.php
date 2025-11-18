@@ -10,10 +10,9 @@
     </header>
 
 
-    <form method="post" action="{{ route('profile') }}" class="mt-2 space-y-6">
-        @csrf
-
-		<select name="" id="">
+    <form method="GET" action="{{ route('user.edit') }}" class="mt-2 space-y-6">
+       
+		<select name="id" id="">
 			<option value="">--オプション--</option>
 			@foreach($coordinators as $coordinator)
 				<option value="{{$coordinator->id}}">{{$coordinator->name}}</option>

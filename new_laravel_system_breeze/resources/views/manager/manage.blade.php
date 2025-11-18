@@ -4,11 +4,7 @@
             {{ __('管理ページ') }}
         </h2>
     </x-slot>
-    @if (session('success'))
-        <div class="absolute top-[7%] left-[45%] p-4 bg-[#F0EDED] rounded-lg ">
-            {{ session('success') }}
-        </div>
-    @endif
+    
 
     <div class="max-w-[200px] mx-auto mt-10">
         <!-- Кнопки вкладок -->
@@ -71,9 +67,6 @@
                     </div>
                 </div>
 
-           
-                
-                
             </div>
         </div>
     </div>

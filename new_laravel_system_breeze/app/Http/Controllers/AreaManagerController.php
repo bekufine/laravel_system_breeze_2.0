@@ -18,6 +18,35 @@ class AreaManagerController extends Controller
         $this->user = Auth::user();        
     }
 
+    public function editUser(Request $request){
+        $user = User::findOrFail($request->id);
+        return view("manager.edit_user",["user"=>$user, "title" => "プロファイル情報変化"]);
+    }
+    public function updateUser(User $user, Request $request){
+        $validated = $request->validateWithBag("user_info", [
+            "name"=>"required|string|min:1",
+            "email"=>"required|email|unique:users,email"
+        ],[
+            'email.unique' => 'このメールアドレスは既に登録されています。'
+        ]);
+        $user->update($validated);
+        return back()->with("success", "ユーザーは更新されました。");
+    }
+
+    public function updateUserPasswors (Request $request)
+    {
+        $request->user()->fill($request->validated());
+
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
+        }
+
+        $request->user()->save();
+
+        return Redirect::route('profile.edit');
+    }
+
+
     public function index(Request $request){
         $hotels  = Hotel::all()->where("city", "=", $this->user->city);
         $coordinators = User::all()->where("city", "=", $this->user->city)
