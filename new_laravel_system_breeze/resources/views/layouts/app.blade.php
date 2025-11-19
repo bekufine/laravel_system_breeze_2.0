@@ -15,6 +15,16 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
+    @if (session('success'))
+        <div class="absolute top-[7%] left-[45%] p-4 bg-[#F0EDED] rounded-lg ">
+            {{ session('success') }}
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="absolute top-[7%] left-[45%] p-4 bg-[#F0EDED] rounded-lg ">
+            {{ session('error') }}
+        </div>
+    @endif
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')

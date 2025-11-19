@@ -12,7 +12,7 @@
 
     <form method="GET" action="{{ route('user.edit') }}" class="mt-2 space-y-6">
        
-		<select name="id" id="">
+		<select name="id" id="" required>
 			<option value="">--オプション--</option>
 			@foreach($coordinators as $coordinator)
 				<option value="{{$coordinator->id}}">{{$coordinator->name}}</option>

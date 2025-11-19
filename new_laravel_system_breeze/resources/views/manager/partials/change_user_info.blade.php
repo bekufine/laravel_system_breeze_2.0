@@ -11,10 +11,10 @@
 
 
     <form method="GET" action="{{ route('user.edit') }}" class="mt-2 space-y-6">
-		<select name="id" id="">
+		<select name="id" id="" required>
 			<option value="">--オプション--</option>
 			@foreach($users as $user)
-				<option value="{{$user->id}}">{{$user->name}}</option>
+				<option value="{{$user->id}}"  >{{$user->name}}</option>
 			@endforeach
 		</select>
 		<div class="flex items-center gap-4">

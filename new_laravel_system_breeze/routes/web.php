@@ -57,7 +57,8 @@ Route::middleware(["auth", "role:area_manager"])->group(function(){
 
     Route::get("/users/edit", [AreaManagerController::class, 'editUser'])->name('user.edit');
     Route::patch("/users/{user}", [AreaManagerController::class, 'updateUser'])->name('user.update');
-    
+    Route::patch("/users/{user}/password", [AreaManagerController::class, 'updateUserPassword'])->name('user.password.update');
+    Route::delete("/users/{user}/delete", [AreaManagerController::class, 'destroyUser'])->name('user.destroy');
     
     Route::get("/management", [AreaManagerController::class, "index"])->name('manager.edit');
     Route::post('/add_hotel', [AreaManagerController::class, 'store_hotel'])->name('manager.store.hotel');

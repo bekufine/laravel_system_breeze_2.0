@@ -6,6 +6,7 @@ use App\Models\Department;
 use App\Models\Hotel;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
 
@@ -22,6 +23,7 @@ class AreaManagerController extends Controller
         $user = User::findOrFail($request->id);
         return view("manager.edit_user",["user"=>$user, "title" => "プロファイル情報変化"]);
     }
+
     public function updateUser(User $user, Request $request){
         $validated = $request->validateWithBag("user_info", [
             "name"=>"required|string|min:1",
@@ -33,17 +35,39 @@ class AreaManagerController extends Controller
         return back()->with("success", "ユーザーは更新されました。");
     }
 
-    public function updateUserPasswors (Request $request)
+    public function destroyUser(Request $request, User $user)
     {
-        $request->user()->fill($request->validated());
+        $request->validate([
+            'password' => ['required', 'current_password'],
+        ]);
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
+        $user->delete();
 
-        $request->user()->save();
+        return redirect(route("manager.edit"))->with("success","ユーザーは削除されました。！✅");
+    }
 
-        return Redirect::route('profile.edit');
+    public function updateUserPassword (Request $request, User $user)
+    {
+        $validated = $request->validateWithBag("password_bag",[
+            "password"=>["required", Password::defaults(), "confirmed"]
+        ]);
+        // if (!Hash::check($request->current_password, $user->password)){
+        //     return back()->withErrors(["current_password"=>"現在のパスワードは合っていないです。"],'password_bag')->withInput();
+        // }
+        $user->password = Hash::make($validated["password"]);
+        $user->save();
+        return back()->with("success","パスワード更新されました！✅");
+
+        
+        // $request->user()->fill($request->validated());
+
+        // if ($request->user()->isDirty('email')) {
+        //     $request->user()->email_verified_at = null;
+        // }
+
+        // $request->user()->save();
+
+        // return Redirect::route('profile.edit');
     }
 
 

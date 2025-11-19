@@ -114,6 +114,7 @@
                             </tr>
                         </thead>
                         <tbody id="tbody">
+                            {{-- {{dump(count($CoordinatorsOrders))}} --}}
                             @foreach($CoordinatorsOrders as $order)
                                 <x-order-form :coordinatorOrders="true" :order="$order"/>
                             @endforeach
