@@ -54,6 +54,7 @@
                             <th class="border border-gray-700 w-1/10 p-2">
                                 <label class="block text-base/7 font-semibold text-white">イベントスタイル</label>
                             </th>
+                            
                             <th class="border border-gray-700 w-15 p-2"></th>
                         </tr>
                         </thead>
@@ -61,6 +62,7 @@
                             <x-order-form id="0"/>
                         </tbody>
                     </table>
+                    
                     <div class="flex justify-center w-full">
                         <button type="button" onclick="addNewRow()"  class="btn btn-primary bg-gray-800 p-2 rounded-md w-40 mt-7 text-white cursor-pointer">
                           新列
@@ -109,6 +111,9 @@
     const form = document.getElementById('orderForm');
     const modal = document.getElementById('previewModal');
     const preview = document.getElementById('previewContent');
+
+    const input = document.getElementById("input15");
+    const info = document.getElementById("file-info");
 
     document.getElementById('previewBtn').addEventListener('click', () => {
     const formData = new FormData(form);
@@ -163,6 +168,10 @@
                             <th class="border border-gray-700 w-1/10 p-2">
                                 <label class="block text-base/7 font-semibold text-white">イベントスタイル</label>
                             </th>
+
+                            <th class="border border-gray-700 w-1/10 p-2">
+                                <label class="block text-base/7 font-semibold text-white">ファイル</label>
+                            </th>
                               
                         </tr>`;
 
@@ -172,6 +181,7 @@
         for (const [key, value] of formData.entries()) {
             const match = key.match(/^orders\[(\d+)\]\[(.+)\]$/);
             if (!match) continue;
+            console.log(value);
 
             const index = parseInt(match[1], 10);
             const field = match[2];
@@ -190,6 +200,13 @@
         for (const [key, value] of Object.entries(orders[i])) {
             
             if (["hotel_id", "user_id", "dep_id"].includes(key)) {
+                continue;
+            }
+            if (value.name){
+                html += `
+                <td class="border border-gray-700 p-2">
+                        <p> ${value.name} </p>
+                </td>`;
                 continue;
             }
             html += `
@@ -399,7 +416,40 @@ function addNewRow(){
     <td class="border border-gray-700 p-2">
         <button type="button" onclick="deleteRow(${latest})" class="text-red-500 cursor-pointer">削除</button>
         <button type="button" onclick="copyRow(${latest})" class="ml-7 border py-1 p-3 rounded-lg bg- text-blue-500 cursor-pointer">+</button>
+        <input name="orders[${latest}][file]"  id="input15" type="file" class="w-full mt-4"/>
     </td>`;
     tBody.appendChild(newElement);
 }
+
+
+function createFileRow(value){
+    console.log(value);
+    let tBody = document.getElementById("tbody");
+    latest ++
+    var newElement = document.createElement('tr');
+    newElement.setAttribute('id', latest);
+    newElement.innerHTML = `
+    <td class="border border-gray-700 p-2">
+        <input name="orders[${latest}][event_date]"  id="input0" type="date" value="${formattedDate }" class="w-full border-0" min="${ formattedDate }" required/>
+    </td>
+    <td colspan="11" class="border border-gray-700 p-2">
+        <input name="orders[${latest}][file]" value="${value}" id="input15" type="file"/>
+    </td>
+    
+    <td class="border border-gray-700 p-2">
+        <button type="button" onclick="deleteRow(${latest})" class="text-red-500 cursor-pointer">削除</button>
+    </td>
+    `;
+    tBody.appendChild(newElement);
+    
+}
+// input.addEventListener("change", () => {
+//     if (input.files.length > 0) {
+//         const myDiv = document.getElementById('myDivId');
+//         info.textContent = input.files[0].name;
+//         info.classList.remove("text-gray-500");
+//         info.classList.add("text-blue-600", "font-medium");
+
+//     }
+// });
 </script>

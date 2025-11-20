@@ -269,7 +269,6 @@
 
 
 @else 
-
     @php
         $today = new DateTime();
         $todaystring = $today->format("Y/m/d");
@@ -335,10 +334,14 @@
         <input type="hidden" name="orders[0][dep_id]" id="input13" value="{{ auth()->user()->dep_id }}">
 
         <input type="hidden" name="orders[0][user_id]" id="input14" value="{{ auth()->user()->id }}">  
+
+        
         {{-- changed from coor_id to user_id --}}
         <td class="border border-gray-700 p-2">
             <button type="button" onclick="updateRow()" class="text-red-500 cursor-pointer">削除</button>
             <button type="button" onclick="copyRow({{$id}})" class="ml-7 border py-1 p-3 rounded-lg bg- text-blue-500 cursor-pointer">+</button>
+            <br>
+            <input name="orders[0][file]"  id="input15" type="file" class="w-full mt-4"/>
         </td>
         
         
